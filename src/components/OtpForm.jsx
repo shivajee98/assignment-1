@@ -29,14 +29,23 @@ function OtpForm() {
 
     const handleKeyDown = (e, index) => {
         if (e.key === 'Backspace') {
-            if (index > 0) {
+            // If the current input is empty, focus the previous one
+            if (otp[index] === '') {
+                if (index > 0) {
+                    const newOtp = [...otp];
+                    newOtp[index - 1] = '';
+                    setOtp(newOtp);
+                    inputRefs.current[index - 1].focus();
+                }
+            } else {
+                // Clear the current input
                 const newOtp = [...otp];
                 newOtp[index] = '';
                 setOtp(newOtp);
-                inputRefs.current[index - 1].focus();
             }
         }
     };
+    
 
     useEffect(() => {
         // Disable the scrollbar
